@@ -8,7 +8,7 @@ import { defineConfig } from 'vitest/config'
 const rootDir = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
-  base: process.env.VITE_BASE_PATH || '/',
+  base: process.env.VITE_BASE_PATH || '/esg-learning-hub/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
