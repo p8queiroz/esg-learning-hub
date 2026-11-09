@@ -1,0 +1,98 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+  --background: #f3f0e8;
+  --foreground: #1b2420;
+  --card: #fffcf8;
+  --card-foreground: #1b2420;
+  --muted: #e7e1d6;
+  --muted-foreground: #5c675f;
+  --border: #ddd6c8;
+  --primary: #1e4d40;
+  --primary-foreground: #f4f7f5;
+  --secondary: #e5efe8;
+  --secondary-foreground: #1e4d40;
+  --accent: #1f6f78;
+  --accent-foreground: #f3fbfb;
+  --ring: #1f6f78;
+  --caution: #8a5a12;
+  --caution-bg: #f8f1e3;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: #101614;
+  --foreground: #e7eee9;
+  --card: #18211d;
+  --card-foreground: #e7eee9;
+  --muted: #24302b;
+  --muted-foreground: #a8b5ad;
+  --border: #2d3b35;
+  --primary: #9ed4c2;
+  --primary-foreground: #10211b;
+  --secondary: #24342e;
+  --secondary-foreground: #d5efe6;
+  --accent: #8fd0cb;
+  --accent-foreground: #08211f;
+  --ring: #8fd0cb;
+  --caution: #e6c48a;
+  --caution-bg: #2c2618;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-ring: var(--ring);
+  --color-caution: var(--caution);
+  --color-caution-bg: var(--caution-bg);
+  --font-sans: 'Source Sans 3', 'Segoe UI', sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --radius-lg: 1rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--background);
+  background-image: radial-gradient(ellipse at top, #e5f0ea, transparent 55%);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+.dark body {
+  background-image: radial-gradient(ellipse at top, #163028, transparent 52%);
+}
+
+::selection {
+  background: #c9e4da;
+}
+
+.dark ::selection {
+  background: #1e4d40;
+  color: #f4f7f5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
