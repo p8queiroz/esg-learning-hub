@@ -62,7 +62,7 @@ Local `npm run dev` and `npm run preview` use `/` and do not need the fallback f
 
 ## Architecture
 
-See [docs/architecture.md](docs/architecture.md). The short version: courses, lessons, quizzes, glossary entries, and references are data. Pages do not contain the teaching text. A future retrieval assistant can read those records. This release does not call a language model.
+Courses, lessons, quizzes, glossary entries, and references are data. Pages do not contain the teaching text. A future retrieval assistant can read those records. This release does not call a language model.
 
 ## Contributing
 
