@@ -1,20 +1,27 @@
 import { NavLink } from 'react-router'
 
+import { LocaleSwitch } from '@/components/layout/LocaleSwitch'
 import { navItems } from '@/components/layout/nav'
 import { ThemeToggle } from '@/components/layout/ThemeToggle'
+import { Icon } from '@/components/ui/icon'
+import { useLocale } from '@/hooks/useLocale'
 import { cn } from '@/lib/utils'
 
 export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
+  const { pack } = useLocale()
+
   return (
-    <div className="flex h-full flex-col gap-6 px-4 py-5">
+    <div className="flex h-full flex-col gap-6 px-4 py-5 text-primary-foreground">
       <NavLink to="/" className="flex items-center gap-3 rounded-xl px-2" onClick={onNavigate}>
-        <BrandMark />
+        <span className="inline-flex size-9 items-center justify-center rounded-lg bg-white/15">
+          <Icon name="eco" className="text-[22px]" />
+        </span>
         <span>
-          <span className="block font-serif text-lg leading-5">ESG Learning Hub</span>
-          <span className="text-xs text-muted-foreground">Open curriculum</span>
+          <span className="block text-lg leading-5 font-semibold">ESG Learning Hub</span>
+          <span className="text-xs text-white/70">{pack.ui.tagline}</span>
         </span>
       </NavLink>
-      <nav aria-label="Primary" className="flex flex-1 flex-col gap-1">
+      <nav aria-label={pack.ui.chrome.primaryNav} className="flex flex-1 flex-col gap-1">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
@@ -24,28 +31,20 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
             className={({ isActive }) =>
               cn(
                 'flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold',
-                isActive ? 'bg-secondary text-secondary-foreground' : 'text-foreground hover:bg-muted',
+                isActive ? 'bg-white/15 text-white' : 'text-white/80 hover:bg-white/10 hover:text-white',
               )
             }
           >
-            <item.icon className="size-4" aria-hidden="true" />
-            {item.label}
+            <Icon name={item.icon} className="text-[20px]" />
+            {pack.ui.nav[item.key]}
           </NavLink>
         ))}
       </nav>
       <div className="space-y-3 px-2">
-        <ThemeToggle />
-        <p className="text-xs leading-5 text-muted-foreground">Sources are linked. Example factors are illustrative, never official values.</p>
+        <LocaleSwitch tone="rail" />
+        <ThemeToggle tone="rail" />
+        <p className="text-xs leading-5 text-white/70">{pack.ui.sourceNote}</p>
       </div>
     </div>
-  )
-}
-
-export function BrandMark() {
-  return (
-    <svg viewBox="0 0 32 32" className="size-9 text-primary-foreground" aria-hidden="true">
-      <rect width="32" height="32" rx="8" className="fill-primary" />
-      <path d="M8 22h10M8 16h16M8 10h7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
   )
 }

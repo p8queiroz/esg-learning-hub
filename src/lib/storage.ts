@@ -2,6 +2,7 @@ import type { ProgressState } from '@/types/content'
 
 export const PROGRESS_STORAGE_KEY = 'esg-learning-hub.progress.v1'
 export const THEME_STORAGE_KEY = 'esg-learning-hub.theme'
+export const LOCALE_STORAGE_KEY = 'esg-learning-hub.locale'
 
 export const emptyProgress = (): ProgressState => ({
   completedLessonIds: [],

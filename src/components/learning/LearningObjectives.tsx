@@ -1,12 +1,15 @@
-import { BookOpen } from 'lucide-react'
+import { IconTile } from '@/components/ui/icon'
+import { useLocale } from '@/hooks/useLocale'
 
 export function LearningObjectives({ items }: { items: string[] }) {
+  const { pack } = useLocale()
+
   return (
     <section aria-labelledby="learning-objectives" className="rounded-2xl border border-border bg-secondary/60 p-5">
       <div className="mb-3 flex items-center gap-2">
-        <BookOpen className="size-4 text-primary" aria-hidden="true" />
+        <IconTile name="flag" />
         <h2 id="learning-objectives" className="text-sm font-semibold tracking-wide uppercase">
-          Learning objectives
+          {pack.ui.lesson.objectives}
         </h2>
       </div>
       <ul className="space-y-2">

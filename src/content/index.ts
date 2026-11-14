@@ -1,58 +1,62 @@
-import { carbonLessons } from '@/content/lessons/carbon-accounting'
-import { engineeringLessons } from '@/content/lessons/engineering'
-import { foundationLessons } from '@/content/lessons/foundations'
-import { courses } from '@/content/courses'
-import { glossary, glossaryMap } from '@/content/glossary'
-import { quizMap, quizzes } from '@/content/quizzes'
-import { referenceMap, references } from '@/content/references'
-import { topics } from '@/content/topics'
-import type { Course, Lesson } from '@/types/content'
+import { referenceMap } from '@/content/references'
+import type { LocalePack } from '@/locales/types'
+import type { Course } from '@/types/content'
 
-export const lessons: Lesson[] = [...foundationLessons, ...carbonLessons, ...engineeringLessons]
-
-export const lessonMap = Object.fromEntries(lessons.map((lesson) => [lesson.id, lesson]))
-
-const courseMap = Object.fromEntries(courses.map((course) => [course.id, course]))
-
-export function getCourse(courseId: string) {
-  return courseMap[courseId]
+export function lessonMapOf(pack: LocalePack) {
+  return Object.fromEntries(pack.lessons.map((lesson) => [lesson.id, lesson]))
 }
 
-export function getLesson(lessonId: string) {
-  return lessonMap[lessonId]
+export function courseMapOf(pack: LocalePack) {
+  return Object.fromEntries(pack.courses.map((course) => [course.id, course]))
 }
 
-export function publishedLessonIds(course: Course) {
+export function glossaryMapOf(pack: LocalePack) {
+  return Object.fromEntries(pack.glossary.map((entry) => [entry.id, entry]))
+}
+
+export function quizMapOf(pack: LocalePack) {
+  return Object.fromEntries(pack.quizzes.map((quiz) => [quiz.id, quiz]))
+}
+
+export function getCourse(pack: LocalePack, courseId: string) {
+  return courseMapOf(pack)[courseId]
+}
+
+export function getLesson(pack: LocalePack, lessonId: string) {
+  return lessonMapOf(pack)[lessonId]
+}
+
+export function publishedLessonIds(pack: LocalePack, course: Course) {
+  const lessonMap = lessonMapOf(pack)
   return course.sections.flatMap((section) =>
     section.items.flatMap((item) => (item.lessonId && lessonMap[item.lessonId] ? [item.lessonId] : [])),
   )
 }
 
-export function publishedLessons(course: Course) {
-  return publishedLessonIds(course).map((id) => lessonMap[id])
+export function publishedLessons(pack: LocalePack, course: Course) {
+  const lessonMap = lessonMapOf(pack)
+  return publishedLessonIds(pack, course).map((id) => lessonMap[id])
 }
 
-export function listPublishedLessons() {
-  return courses.flatMap((course) => publishedLessons(course))
+export function listPublishedLessons(pack: LocalePack) {
+  return pack.courses.flatMap((course) => publishedLessons(pack, course))
 }
 
 export function plannedCount(course: Course) {
-  return course.sections.reduce(
-    (count, section) => count + section.items.filter((item) => !item.lessonId).length,
-    0,
-  )
+  return course.sections.reduce((count, section) => count + section.items.filter((item) => !item.lessonId).length, 0)
 }
 
-export function courseMinutes(course: Course) {
-  return publishedLessons(course).reduce((total, lesson) => total + lesson.minutes, 0)
+export function courseMinutes(pack: LocalePack, course: Course) {
+  return publishedLessons(pack, course).reduce((total, lesson) => total + lesson.minutes, 0)
 }
 
-export function adjacentLessons(lessonId: string) {
+export function adjacentLessons(pack: LocalePack, lessonId: string) {
+  const lessonMap = lessonMapOf(pack)
   const lesson = lessonMap[lessonId]
   if (!lesson) return { previous: undefined, next: undefined }
-  const course = courseMap[lesson.courseId]
+  const course = courseMapOf(pack)[lesson.courseId]
   if (!course) return { previous: undefined, next: undefined }
-  const ids = publishedLessonIds(course)
+  const ids = publishedLessonIds(pack, course)
   const index = ids.indexOf(lessonId)
   return {
     previous: index > 0 ? lessonMap[ids[index - 1]] : undefined,
@@ -60,8 +64,10 @@ export function adjacentLessons(lessonId: string) {
   }
 }
 
-export function getReferences(ids: string[]) {
-  return ids.flatMap((id) => (referenceMap[id] ? [referenceMap[id]] : []))
+export function getReferences(pack: LocalePack, ids: string[]) {
+  return ids.flatMap((id) => {
+    const reference = referenceMap[id]
+    if (!reference) return []
+    return [{ ...reference, note: pack.referenceNotes[id] }]
+  })
 }
-
-export { courses, glossary, glossaryMap, quizMap, quizzes, referenceMap, references, topics }

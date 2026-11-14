@@ -4,18 +4,27 @@ import { describe, expect, it } from 'vitest'
 
 import { EmissionsCalculator } from '@/components/interactive/EmissionsCalculator'
 import { LessonQuiz } from '@/components/interactive/Quiz'
+import { LocaleProvider } from '@/hooks/useLocale'
 import { ProgressProvider } from '@/hooks/useProgress'
 
 describe('emissions calculator', () => {
   it('shows the illustrative electricity result and labels it as fiction', () => {
-    render(<EmissionsCalculator />)
+    render(
+      <LocaleProvider>
+        <EmissionsCalculator />
+      </LocaleProvider>,
+    )
     expect(screen.getByText('1,000 kWh × 0.4 kg CO₂e/kWh = 400 kg CO₂e')).toBeInTheDocument()
     expect(screen.getByRole('note').textContent).toMatch(/fictional/i)
   })
 
   it('rejects an empty activity', async () => {
     const user = userEvent.setup()
-    render(<EmissionsCalculator />)
+    render(
+      <LocaleProvider>
+        <EmissionsCalculator />
+      </LocaleProvider>,
+    )
     const input = screen.getByRole('textbox', { name: /electricity used/i })
     await user.clear(input)
     expect(screen.getByText(/enter a numeric activity quantity/i)).toBeInTheDocument()
@@ -26,9 +35,11 @@ describe('scopes quiz', () => {
   it('records a correct answer for owned combustion', async () => {
     const user = userEvent.setup()
     render(
-      <ProgressProvider>
-        <LessonQuiz quizId="scopes-quiz" mode="quiz" />
-      </ProgressProvider>,
+      <LocaleProvider>
+        <ProgressProvider>
+          <LessonQuiz quizId="scopes-quiz" mode="quiz" />
+        </ProgressProvider>
+      </LocaleProvider>,
     )
 
     await user.click(screen.getByRole('radio', { name: 'Scope 1' }))

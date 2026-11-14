@@ -8,13 +8,16 @@ describe('emissions calculation', () => {
   })
 
   it('writes the unit-aware formula', () => {
-    const result = buildCalculation({
-      activity: 1000,
-      factor: 0.4,
-      activityUnit: 'kWh',
-      factorUnit: 'kg CO₂e/kWh',
-      resultUnit: 'kg CO₂e',
-    })
+    const result = buildCalculation(
+      {
+        activity: 1000,
+        factor: 0.4,
+        activityUnit: 'kWh',
+        factorUnit: 'kg CO₂e/kWh',
+        resultUnit: 'kg CO₂e',
+      },
+      'en',
+    )
 
     expect(result.ok).toBe(true)
     if (result.ok) {
@@ -25,14 +28,17 @@ describe('emissions calculation', () => {
   })
 
   it('rejects a negative activity', () => {
-    const result = buildCalculation({
-      activity: -1,
-      factor: 0.4,
-      activityUnit: 'kWh',
-      factorUnit: 'kg CO₂e/kWh',
-      resultUnit: 'kg CO₂e',
-    })
+    const result = buildCalculation(
+      {
+        activity: -1,
+        factor: 0.4,
+        activityUnit: 'kWh',
+        factorUnit: 'kg CO₂e/kWh',
+        resultUnit: 'kg CO₂e',
+      },
+      'en',
+    )
 
-    expect(result.ok).toBe(false)
+    expect(result).toEqual({ ok: false, error: 'negative' })
   })
 })

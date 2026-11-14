@@ -1,17 +1,21 @@
 import { useState } from 'react'
 
-import { quizMap } from '@/content'
+import { Icon, IconTile } from '@/components/ui/icon'
+import { quizMapOf } from '@/content'
+import { useLocale } from '@/hooks/useLocale'
 import { useProgress } from '@/hooks/useProgress'
 import type { Quiz, QuizQuestion } from '@/types/content'
 
 export function LessonQuiz({ quizId, mode }: { quizId: string; mode: 'check' | 'quiz' }) {
-  const quiz = quizMap[quizId]
+  const { pack } = useLocale()
+  const quiz = quizMapOf(pack)[quizId]
   if (!quiz) return null
   if (mode === 'check') return <KnowledgeCheck quiz={quiz} />
   return <InteractiveQuiz quiz={quiz} />
 }
 
 function KnowledgeCheck({ quiz }: { quiz: Quiz }) {
+  const { pack } = useLocale()
   const question = quiz.questions[0]
   const [choiceId, setChoiceId] = useState<string>()
   if (!question) return null
@@ -21,17 +25,26 @@ function KnowledgeCheck({ quiz }: { quiz: Quiz }) {
   return (
     <section aria-labelledby={`${quiz.id}-title`} className="space-y-4 rounded-2xl border border-border bg-card p-5">
       <div>
-        <p className="text-xs font-semibold tracking-wide text-accent uppercase">Knowledge check</p>
-        <h3 id={`${quiz.id}-title`} className="font-serif text-2xl">
+        <div className="flex items-center gap-2">
+          <IconTile name="quiz" />
+          <p className="text-xs font-semibold tracking-wide text-accent uppercase">{pack.ui.quiz.check}</p>
+        </div>
+        <h3 id={`${quiz.id}-title`} className="mt-3 text-2xl font-semibold tracking-tight">
           {quiz.title}
         </h3>
         <p className="mt-1 text-sm text-muted-foreground">{quiz.description}</p>
       </div>
       <ChoiceList question={question} name={quiz.id} value={choiceId} onChange={setChoiceId} />
       {selected ? (
-        <p className="rounded-xl bg-muted px-4 py-3 text-sm leading-6" role="status">
-          <span className="font-semibold">{correct ? 'Correct. ' : 'Not quite. '}</span>
-          {question.explanation}
+        <p className="flex items-start gap-2 rounded-xl bg-muted px-4 py-3 text-sm leading-6" role="status">
+          <Icon
+            name={correct ? 'check_circle' : 'cancel'}
+            className={correct ? 'mt-0.5 text-primary' : 'mt-0.5 text-caution'}
+          />
+          <span>
+            <span className="font-semibold">{correct ? `${pack.ui.quiz.correct} ` : `${pack.ui.quiz.notQuite} `}</span>
+            {question.explanation}
+          </span>
         </p>
       ) : null}
     </section>
@@ -42,6 +55,7 @@ function InteractiveQuiz({ quiz }: { quiz: Quiz }) {
   const { recordQuiz, progress } = useProgress()
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [submitted, setSubmitted] = useState(false)
+  const { pack } = useLocale()
   const saved = progress.quizResults[quiz.id]
   const allAnswered = quiz.questions.every((question) => answers[question.id])
   const correctCount = quiz.questions.filter((question) => answers[question.id] === question.correctChoiceId).length
@@ -59,14 +73,17 @@ function InteractiveQuiz({ quiz }: { quiz: Quiz }) {
   return (
     <section aria-labelledby={`${quiz.id}-title`} className="space-y-5 rounded-2xl border border-border bg-card p-5">
       <div>
-        <p className="text-xs font-semibold tracking-wide text-accent uppercase">Quiz</p>
-        <h3 id={`${quiz.id}-title`} className="font-serif text-2xl">
+        <div className="flex items-center gap-2">
+          <IconTile name="quiz" />
+          <p className="text-xs font-semibold tracking-wide text-accent uppercase">{pack.ui.quiz.quiz}</p>
+        </div>
+        <h3 id={`${quiz.id}-title`} className="mt-3 text-2xl font-semibold tracking-tight">
           {quiz.title}
         </h3>
         <p className="mt-1 text-sm text-muted-foreground">{quiz.description}</p>
         {saved ? (
           <p className="mt-2 text-sm">
-            Latest saved score: {saved.correct} of {saved.total}.
+            {pack.ui.quiz.savedScore(saved.correct, saved.total)}
           </p>
         ) : null}
       </div>
@@ -86,9 +103,15 @@ function InteractiveQuiz({ quiz }: { quiz: Quiz }) {
               disabled={submitted}
             />
             {submitted ? (
-              <p className="rounded-xl bg-muted px-4 py-3 text-sm leading-6" role="status">
-                <span className="font-semibold">{isCorrect ? 'Correct. ' : 'Not quite. '}</span>
-                {question.explanation}
+              <p className="flex items-start gap-2 rounded-xl bg-muted px-4 py-3 text-sm leading-6" role="status">
+                <Icon
+                  name={isCorrect ? 'check_circle' : 'cancel'}
+                  className={isCorrect ? 'mt-0.5 text-primary' : 'mt-0.5 text-caution'}
+                />
+                <span>
+                  <span className="font-semibold">{isCorrect ? `${pack.ui.quiz.correct} ` : `${pack.ui.quiz.notQuite} `}</span>
+                  {question.explanation}
+                </span>
               </p>
             ) : null}
           </fieldset>
@@ -102,15 +125,15 @@ function InteractiveQuiz({ quiz }: { quiz: Quiz }) {
             disabled={!allAnswered}
             onClick={submit}
           >
-            Check answers
+            {pack.ui.quiz.checkAnswers}
           </button>
         ) : (
           <>
             <p className="self-center text-sm font-semibold" role="status">
-              {correctCount} of {quiz.questions.length} correct.
+              {pack.ui.quiz.score(correctCount, quiz.questions.length)}
             </p>
             <button type="button" className="h-10 rounded-full border border-border px-4 text-sm font-semibold" onClick={retry}>
-              Try again
+              {pack.ui.quiz.tryAgain}
             </button>
           </>
         )}
