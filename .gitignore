@@ -1,8 +1,11 @@
 # Dependencies
 node_modules/
 
-# Private project documentation
+# Private project material (stored separately)
 /docs/
+/local-scripts/
+/private/
+/ESG Learning Hub Assets/
 
 # Generated output
 dist/

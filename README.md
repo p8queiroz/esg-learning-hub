@@ -70,14 +70,6 @@ Courses, lessons, quizzes, glossary entries, and references are data. Pages do n
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Content corrections need a source. Illustrative numbers must stay labeled as illustrative.
 
-## Roadmap
-
-- A dedicated lesson for the Paris Agreement.
-- A reporting path that keeps GRI, ISSB, and ESRS distinct, and that refuses to hard-code a CSRD scope that the law has changed.
-- A carbon-markets path for credits, offsets, additionality, permanence, and leakage.
-- Deeper engineering lessons on unit conversion, ingestion, and factor versioning.
-- Retrieval over the existing content records, with human review before any generated question is published.
-
 ## License
 
 [MIT](LICENSE)
