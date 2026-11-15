@@ -1,16 +1,7 @@
-import { BookMarked, Compass, Info, LayoutDashboard, Route, type LucideIcon } from 'lucide-react'
-
-export type NavItem = {
-  to: string
-  label: string
-  icon: LucideIcon
-  end?: boolean
-}
-
-export const navItems: NavItem[] = [
-  { to: '/', label: 'Dashboard', icon: LayoutDashboard, end: true },
-  { to: '/paths', label: 'Learning paths', icon: Route },
-  { to: '/explore', label: 'Topic explorer', icon: Compass },
-  { to: '/glossary', label: 'Glossary', icon: BookMarked },
-  { to: '/about', label: 'About', icon: Info },
-]
+export const navItems = [
+  { to: '/', key: 'dashboard', icon: 'dashboard', end: true },
+  { to: '/paths', key: 'paths', icon: 'conversion_path', end: false },
+  { to: '/explore', key: 'explore', icon: 'explore', end: false },
+  { to: '/glossary', key: 'glossary', icon: 'menu_book', end: false },
+  { to: '/about', key: 'about', icon: 'info', end: false },
+] as const

@@ -1,8 +1,10 @@
 # ESG Learning Hub
-## https://p8queiroz.github.io/esg-learning-hub
+
+[Open ESG Learning Hub](https://p8queiroz.github.io/esg-learning-hub/)
+
 ESG Learning Hub is an open curriculum for sustainability, carbon accounting, and the software systems behind them. It is a small learning product: structured paths, lessons built from reusable teaching components, a glossary, a quiz, and an emissions calculator. Progress stays in the browser. There is no account and no backend.
 
-The first release publishes ten lessons across three paths. Reporting standards and carbon markets are listed as planned syllabi, not as empty lessons.
+The hub publishes thirteen lessons across three paths. Reporting standards and carbon markets are listed as planned syllabi, not as empty lessons.
 
 ## What you can do
 
@@ -18,7 +20,7 @@ The first release publishes ten lessons across three paths. Reporting standards 
 | Path | Status |
 | --- | --- |
 | ESG and sustainability foundations | 4 lessons published |
-| Carbon accounting fundamentals | 4 lessons published |
+| Carbon accounting fundamentals | 7 lessons published |
 | Sustainability software engineering | 2 lessons published |
 | Sustainability reporting | Syllabus only |
 | Carbon markets and climate solutions | Syllabus only |
@@ -48,11 +50,11 @@ npm run build
 
 ## GitHub Pages
 
-The deploy workflow publishes the `main` branch with GitHub Pages.
+The deploy workflow publishes the `master` branch with GitHub Pages.
 
 1. In the repository settings, open **Pages**.
 2. Set the source to **GitHub Actions**.
-3. Push to `main`. The **Deploy GitHub Pages** workflow builds with `VITE_BASE_PATH` set to `/<repository-name>/` and uploads `dist`.
+3. Push to `master`. The **Deploy GitHub Pages** workflow builds with `VITE_BASE_PATH` set to `/<repository-name>/` and uploads `dist`.
 
 Project sites need that base path so assets resolve when a deep link is served. GitHub Pages responds to an unknown path such as `/esg-learning-hub/learn/foundations/scopes` with the site `404.html` and leaves the URL in place. Because `404.html` is the built app, and asset URLs are absolute from the base path, the router can read the lesson from the URL.
 
@@ -67,14 +69,6 @@ Courses, lessons, quizzes, glossary entries, and references are data. Pages do n
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Content corrections need a source. Illustrative numbers must stay labeled as illustrative.
-
-## Roadmap
-
-- Dedicated lessons for the Paris Agreement, Scope 3 screening, and base-year recalculation.
-- A reporting path that keeps GRI, ISSB, and ESRS distinct, and that refuses to hard-code a CSRD scope that the law has changed.
-- A carbon-markets path for credits, offsets, additionality, permanence, and leakage.
-- Deeper engineering lessons on unit conversion, ingestion, and factor versioning.
-- Retrieval over the existing content records, with human review before any generated question is published.
 
 ## License
 

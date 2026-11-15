@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 
+import { useLocale } from '@/hooks/useLocale'
 import type { DiagramId } from '@/types/content'
 
 export function Diagram({ diagram }: { diagram: DiagramId }) {
@@ -19,18 +20,15 @@ function Figure({ caption, children }: { caption: string; children: ReactNode })
 }
 
 function PillarsDiagram() {
-  const pillars = [
-    { title: 'Environmental', items: ['Climate and energy', 'Water and pollution', 'Land and biodiversity'] },
-    { title: 'Social', items: ['Labor practices', 'Community impact', 'Product safety'] },
-    { title: 'Governance', items: ['Board oversight', 'Ethics and controls', 'Transparency'] },
-  ]
+  const { pack } = useLocale()
+  const copy = pack.ui.diagrams
 
   return (
-    <Figure caption="Illustrative groupings only. GRI, the ESRS, and IFRS S2 publish their own topic lists, and those lists are not identical.">
+    <Figure caption={copy.pillarsCaption}>
       <div className="grid gap-3 sm:grid-cols-3">
-        {pillars.map((pillar) => (
+        {copy.pillars.map((pillar) => (
           <div key={pillar.title} className="rounded-xl bg-secondary p-4">
-            <h3 className="font-serif text-lg">{pillar.title}</h3>
+            <h3 className="font-semibold tracking-tight text-lg">{pillar.title}</h3>
             <ul className="mt-2 space-y-1 text-sm">
               {pillar.items.map((item) => (
                 <li key={item}>{item}</li>
@@ -44,23 +42,26 @@ function PillarsDiagram() {
 }
 
 function ScopesDiagram() {
+  const { pack } = useLocale()
+  const copy = pack.ui.diagrams
+
   return (
-    <Figure caption="Scope 1 sits inside the organizational boundary. Scope 2 is purchased energy. Scope 3 is the rest of the value chain, classified into 15 categories by the Scope 3 Standard.">
+    <Figure caption={copy.scopesCaption}>
       <div className="grid gap-3 lg:grid-cols-[1fr_1.1fr_1fr] lg:items-stretch">
         <div className="rounded-xl border border-primary/30 bg-secondary p-4">
-          <p className="text-xs font-semibold tracking-wide text-primary uppercase">Inside the boundary</p>
-          <h3 className="mt-2 font-serif text-xl">Scope 1</h3>
-          <p className="mt-2 text-sm leading-6">Direct emissions from owned or controlled sources. The boiler, the fleet, the process vent.</p>
+          <p className="text-xs font-semibold tracking-wide text-primary uppercase">{copy.scope1Eyebrow}</p>
+          <h3 className="mt-2 font-semibold tracking-tight text-xl">{copy.scope1Title}</h3>
+          <p className="mt-2 text-sm leading-6">{copy.scope1Body}</p>
         </div>
         <div className="rounded-xl border border-dashed border-accent bg-card p-4">
-          <p className="text-xs font-semibold tracking-wide text-accent uppercase">Purchased energy</p>
-          <h3 className="mt-2 font-serif text-xl">Scope 2</h3>
-          <p className="mt-2 text-sm leading-6">Generation of electricity, steam, heat, or cooling the company buys and consumes. Report location-based and market-based.</p>
+          <p className="text-xs font-semibold tracking-wide text-accent uppercase">{copy.scope2Eyebrow}</p>
+          <h3 className="mt-2 font-semibold tracking-tight text-xl">{copy.scope2Title}</h3>
+          <p className="mt-2 text-sm leading-6">{copy.scope2Body}</p>
         </div>
         <div className="rounded-xl bg-muted p-4">
-          <p className="text-xs font-semibold tracking-wide uppercase">Value chain</p>
-          <h3 className="mt-2 font-serif text-xl">Scope 3</h3>
-          <p className="mt-2 text-sm leading-6">Other indirect emissions. Flights, purchased goods, use of sold products, investments. Fifteen categories, not one bucket.</p>
+          <p className="text-xs font-semibold tracking-wide uppercase">{copy.scope3Eyebrow}</p>
+          <h3 className="mt-2 font-semibold tracking-tight text-xl">{copy.scope3Title}</h3>
+          <p className="mt-2 text-sm leading-6">{copy.scope3Body}</p>
         </div>
       </div>
     </Figure>
@@ -68,47 +69,40 @@ function ScopesDiagram() {
 }
 
 function CalculationDiagram() {
-  const steps = [
-    { title: 'Activity', body: '1,000 kWh' },
-    { title: 'Factor', body: '0.40 kg CO₂e/kWh' },
-    { title: 'Result', body: '400 kg CO₂e' },
-  ]
+  const { pack } = useLocale()
+  const copy = pack.ui.diagrams
 
   return (
-    <Figure caption="Illustrative arithmetic. 0.40 kg CO₂e/kWh is not a published grid factor. A real line also stores the factor’s source, year, and Scope 2 method.">
+    <Figure caption={copy.calculationCaption}>
       <div className="grid gap-3 sm:grid-cols-3">
-        {steps.map((step, index) => (
+        {copy.calculationSteps.map((step, index) => (
           <div key={step.title} className="rounded-xl bg-muted p-4">
             <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
               {index + 1}. {step.title}
             </p>
-            <p className="mt-2 font-serif text-2xl">{step.body}</p>
+            <p className="mt-2 font-semibold tracking-tight text-2xl">{step.body}</p>
           </div>
         ))}
       </div>
-      <p className="text-center text-sm font-semibold">1,000 kWh × 0.40 kg CO₂e/kWh = 400 kg CO₂e</p>
+      <p className="text-center text-sm font-semibold">{copy.calculationFormula}</p>
     </Figure>
   )
 }
 
 function PlatformDiagram() {
-  const modules = [
-    ['Ingestion', 'Original quantities and units'],
-    ['Boundary', 'Consolidation approach and scopes'],
-    ['Factor catalog', 'Versioned, cited factors'],
-    ['Calculation', 'Pure function of those inputs'],
-    ['Lineage', 'Result, expression, approval'],
-    ['Disclosure', 'A view, not a second calculator'],
-  ]
+  const { pack } = useLocale()
+  const copy = pack.ui.diagrams
 
   return (
-    <Figure caption="An engineering reading of the accounting requirements. Not a required architecture and not a vendor diagram.">
+    <Figure caption={copy.platformCaption}>
       <ol className="grid gap-3 sm:grid-cols-2">
-        {modules.map(([title, body], index) => (
-          <li key={title} className="rounded-xl border border-border p-4">
-            <p className="text-xs font-semibold text-accent">0{index + 1}</p>
-            <h3 className="mt-1 font-semibold">{title}</h3>
-            <p className="mt-1 text-sm text-muted-foreground">{body}</p>
+        {copy.platform.map((module, index) => (
+          <li key={module.title} className="rounded-xl border border-border p-4">
+            <p className="inline-flex size-9 items-center justify-center rounded-xl bg-primary text-sm font-semibold text-primary-foreground">
+              {index + 1}
+            </p>
+            <h3 className="mt-1 font-semibold">{module.title}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{module.body}</p>
           </li>
         ))}
       </ol>

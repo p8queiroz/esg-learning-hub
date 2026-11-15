@@ -7,7 +7,6 @@ export const references: Reference[] = [
     publisher: 'United Nations',
     date: '1987',
     url: 'https://sustainabledevelopment.un.org/content/documents/5987our-common-future.pdf',
-    note: 'Source of the widely quoted definition of sustainable development.',
   },
   {
     id: 'paris',
@@ -15,7 +14,6 @@ export const references: Reference[] = [
     publisher: 'UNFCCC',
     date: '2015',
     url: 'https://unfccc.int/process-and-meetings/the-paris-agreement',
-    note: 'Adopted in 2015 and entered into force in 2016.',
   },
   {
     id: 'ipcc-ar6',
@@ -23,7 +21,6 @@ export const references: Reference[] = [
     publisher: 'IPCC',
     date: '2021',
     url: 'https://www.ipcc.ch/report/ar6/wg1/',
-    note: 'GWP-100 values used in lessons are from Chapter 7, Table 7.15. Other time horizons are in the same chapter.',
   },
   {
     id: 'ghg-corporate',
@@ -31,7 +28,6 @@ export const references: Reference[] = [
     publisher: 'GHG Protocol (WRI and WBCSD)',
     date: '2004',
     url: 'https://ghgprotocol.org/corporate-standard',
-    note: 'Defines inventory principles, organizational boundaries, and Scope 1 and Scope 2. Scope 3 is optional in this standard.',
   },
   {
     id: 'ghg-scope2',
@@ -39,7 +35,6 @@ export const references: Reference[] = [
     publisher: 'World Resources Institute',
     date: '2015',
     url: 'https://ghgprotocol.org/scope-2-guidance',
-    note: 'Defines location-based and market-based Scope 2 accounting.',
   },
   {
     id: 'ghg-scope3',
@@ -47,7 +42,6 @@ export const references: Reference[] = [
     publisher: 'GHG Protocol (WRI and WBCSD)',
     date: '2011',
     url: 'https://ghgprotocol.org/corporate-value-chain-scope-3-standard',
-    note: 'Defines the 15 Scope 3 categories and relevance criteria for a Scope 3 inventory.',
   },
   {
     id: 'gri',
@@ -55,7 +49,6 @@ export const references: Reference[] = [
     publisher: 'Global Reporting Initiative',
     date: 'Universal Standards 2021',
     url: 'https://www.globalreporting.org/standards/',
-    note: 'Impact-focused sustainability reporting standards. GRI 1, 2, and 3 are the 2021 Universal Standards.',
   },
   {
     id: 'ifrs-s1',
@@ -63,7 +56,6 @@ export const references: Reference[] = [
     publisher: 'ISSB / IFRS Foundation',
     date: 'June 2023',
     url: 'https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/',
-    note: 'The standard’s effective date is annual periods beginning on or after 1 January 2024. Jurisdictions decide whether and when to adopt it.',
   },
   {
     id: 'ifrs-s2',
@@ -71,7 +63,6 @@ export const references: Reference[] = [
     publisher: 'ISSB / IFRS Foundation',
     date: 'June 2023',
     url: 'https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/',
-    note: 'Climate-related disclosure standard paired with IFRS S1. Adoption is jurisdictional.',
   },
   {
     id: 'csrd',
@@ -79,7 +70,6 @@ export const references: Reference[] = [
     publisher: 'European Union',
     date: '2022',
     url: 'https://eur-lex.europa.eu/eli/dir/2022/2464/oj',
-    note: 'Read the current consolidated legal text before deciding which companies are in scope. Later EU acts have proposed or adopted changes to timing and thresholds.',
   },
   {
     id: 'esrs',
@@ -87,7 +77,6 @@ export const references: Reference[] = [
     publisher: 'European Commission',
     date: '2023',
     url: 'https://eur-lex.europa.eu/eli/reg_del/2023/2772/oj',
-    note: 'ESRS 1 sets out double materiality. Confirm the text in force before relying on a requirement.',
   },
   {
     id: 'epa-hub',
@@ -95,7 +84,6 @@ export const references: Reference[] = [
     publisher: 'US EPA',
     date: 'Updated periodically',
     url: 'https://www.epa.gov/climateleadership/ghg-emission-factors-hub',
-    note: 'A public source of emission factors. Use the version that matches the inventory year. This site does not copy those factors.',
   },
   {
     id: 'egrid',
@@ -103,7 +91,6 @@ export const references: Reference[] = [
     publisher: 'US EPA',
     date: 'Updated periodically',
     url: 'https://www.epa.gov/egrid',
-    note: 'Source of US electricity emission rates used in location-based Scope 2 accounting.',
   },
   {
     id: 'iso-14064',
@@ -111,7 +98,6 @@ export const references: Reference[] = [
     publisher: 'ISO',
     date: '2018',
     url: 'https://www.iso.org/standard/66453.html',
-    note: 'A normative international standard for quantification and reporting of organizational GHG emissions. It is not the same document as the GHG Protocol.',
   },
   {
     id: 'iso-14040',
@@ -126,7 +112,6 @@ export const references: Reference[] = [
     publisher: 'Science Based Targets initiative',
     date: 'Ongoing versions',
     url: 'https://sciencebasedtargets.org/net-zero',
-    note: 'A voluntary target-setting framework. It is not a law and it is not the GHG Protocol. Check the version a company claims to follow.',
   },
   {
     id: 'icvcm',
@@ -134,7 +119,6 @@ export const references: Reference[] = [
     publisher: 'Integrity Council for the Voluntary Carbon Market',
     date: 'Ongoing program',
     url: 'https://icvcm.org/core-carbon-principles/',
-    note: 'Quality criteria used to assess carbon-crediting programs. They do not mean that every credit in the market meets them.',
   },
 ]
 

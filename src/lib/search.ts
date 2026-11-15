@@ -1,4 +1,5 @@
-import { glossary, listPublishedLessons } from '@/content'
+import { listPublishedLessons } from '@/content'
+import type { LocalePack } from '@/locales/types'
 
 export type SearchResult = {
   kind: 'lesson' | 'glossary'
@@ -8,21 +9,21 @@ export type SearchResult = {
   href: string
 }
 
-export function searchContent(query: string): SearchResult[] {
+export function searchContent(pack: LocalePack, query: string): SearchResult[] {
   const needle = query.trim().toLowerCase()
   if (needle.length < 2) return []
 
-  const lessons = listPublishedLessons()
+  const lessons = listPublishedLessons(pack)
     .filter((lesson) => `${lesson.title} ${lesson.summary}`.toLowerCase().includes(needle))
     .map((lesson) => ({
       kind: 'lesson' as const,
       id: lesson.id,
       title: lesson.title,
-      subtitle: 'Lesson',
+      subtitle: pack.ui.searchKind.lesson,
       href: `/learn/${lesson.courseId}/${lesson.id}`,
     }))
 
-  const terms = glossary
+  const terms = pack.glossary
     .filter((entry) => {
       const haystack = [entry.term, entry.definition, ...(entry.aliases ?? [])].join(' ').toLowerCase()
       return haystack.includes(needle)
@@ -31,7 +32,7 @@ export function searchContent(query: string): SearchResult[] {
       kind: 'glossary' as const,
       id: entry.id,
       title: entry.term,
-      subtitle: 'Glossary',
+      subtitle: pack.ui.searchKind.glossary,
       href: `/glossary/${entry.id}`,
     }))
 

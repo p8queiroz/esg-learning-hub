@@ -1,10 +1,11 @@
 import * as Tabs from '@radix-ui/react-tabs'
-import { CircleAlert, Scale, StickyNote } from 'lucide-react'
 
 import { Diagram } from '@/components/learning/Diagrams'
 import { GlossaryLink } from '@/components/learning/GlossaryLink'
 import { LessonQuiz } from '@/components/interactive/Quiz'
 import { EmissionsCalculator } from '@/components/interactive/EmissionsCalculator'
+import { Icon, IconTile } from '@/components/ui/icon'
+import { useLocale } from '@/hooks/useLocale'
 import type { LessonBlock } from '@/types/content'
 
 export function LessonBlocks({ blocks }: { blocks: LessonBlock[] }) {
@@ -18,11 +19,12 @@ export function LessonBlocks({ blocks }: { blocks: LessonBlock[] }) {
 }
 
 function BlockView({ block }: { block: LessonBlock }) {
+  const { pack } = useLocale()
   switch (block.type) {
     case 'paragraph':
       return <p className="text-[17px] leading-8">{block.text}</p>
     case 'heading':
-      return <h2 className="font-serif text-3xl">{block.text}</h2>
+      return <h2 className="text-3xl font-semibold tracking-tight">{block.text}</h2>
     case 'concepts':
       return (
         <div className="grid gap-3 sm:grid-cols-2">
@@ -37,8 +39,11 @@ function BlockView({ block }: { block: LessonBlock }) {
     case 'definition':
       return (
         <aside className="rounded-2xl border border-accent/30 bg-card p-5">
-          <p className="text-xs font-semibold tracking-wide text-accent uppercase">Definition</p>
-          <h3 className="mt-1 font-serif text-2xl">
+          <div className="flex items-center gap-2">
+            <IconTile name="book" />
+            <p className="text-xs font-semibold tracking-wide text-accent uppercase">{pack.ui.blocks.definition}</p>
+          </div>
+          <h3 className="mt-3 text-2xl font-semibold tracking-tight">
             {block.glossaryId ? <GlossaryLink id={block.glossaryId}>{block.term}</GlossaryLink> : block.term}
           </h3>
           <p className="mt-2 leading-7">{block.definition}</p>
@@ -47,11 +52,12 @@ function BlockView({ block }: { block: LessonBlock }) {
     case 'takeaway':
       return (
         <section className="rounded-2xl bg-primary px-5 py-5 text-primary-foreground">
-          <h2 className="font-serif text-2xl">{block.title ?? 'Key takeaway'}</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">{block.title ?? pack.ui.blocks.keyTakeaway}</h2>
           <ul className="mt-3 space-y-2">
             {block.points.map((point) => (
-              <li key={point} className="leading-7">
-                {point}
+              <li key={point} className="flex gap-2 leading-7">
+                <Icon name="check" className="mt-1 text-primary-foreground" />
+                <span>{point}</span>
               </li>
             ))}
           </ul>
@@ -60,13 +66,16 @@ function BlockView({ block }: { block: LessonBlock }) {
     case 'example':
       return (
         <section className="space-y-3 rounded-2xl border border-border bg-card p-5">
-          <p className="text-xs font-semibold tracking-wide text-accent uppercase">Example</p>
-          <h3 className="font-serif text-2xl">{block.title}</h3>
+          <div className="flex items-center gap-2">
+            <IconTile name="lightbulb" />
+            <p className="text-xs font-semibold tracking-wide text-accent uppercase">{pack.ui.blocks.example}</p>
+          </div>
+          <h3 className="text-2xl font-semibold tracking-tight">{block.title}</h3>
           <p className="leading-7">{block.context}</p>
           <p className="leading-7">{block.walkthrough}</p>
           {block.technicalNote ? (
             <p className="rounded-xl bg-muted px-4 py-3 text-sm leading-6">
-              <span className="font-semibold">For engineers. </span>
+              <span className="font-semibold">{pack.ui.blocks.forEngineers} </span>
               {block.technicalNote}
             </p>
           ) : null}
@@ -76,7 +85,7 @@ function BlockView({ block }: { block: LessonBlock }) {
       return (
         <Tabs.Root defaultValue={block.tabs[0]?.id} className="overflow-hidden rounded-2xl border border-border bg-card">
           <div className="border-b border-border px-4 py-4">
-            <h3 className="font-serif text-2xl">{block.title}</h3>
+            <h3 className="text-2xl font-semibold tracking-tight">{block.title}</h3>
             {block.description ? <p className="mt-1 text-sm text-muted-foreground">{block.description}</p> : null}
             <Tabs.List aria-label={block.title} className="mt-4 flex flex-wrap gap-2">
               {block.tabs.map((tab) => (
@@ -100,11 +109,13 @@ function BlockView({ block }: { block: LessonBlock }) {
     case 'steps':
       return (
         <section className="space-y-3">
-          <h3 className="font-serif text-2xl">{block.title}</h3>
+          <h3 className="text-2xl font-semibold tracking-tight">{block.title}</h3>
           <ol className="space-y-3">
             {block.steps.map((step, index) => (
               <li key={step.title} className="grid grid-cols-[2.5rem_1fr] gap-3 rounded-2xl border border-border bg-card p-4">
-                <span className="font-serif text-2xl text-accent">{index + 1}</span>
+                <span className="inline-flex size-9 items-center justify-center rounded-xl bg-primary text-sm font-semibold text-primary-foreground">
+                  {index + 1}
+                </span>
                 <div>
                   <h4 className="font-semibold">{step.title}</h4>
                   <p className="mt-1 text-sm leading-6">{step.body}</p>
@@ -119,7 +130,7 @@ function BlockView({ block }: { block: LessonBlock }) {
     case 'grid':
       return (
         <section className="space-y-3">
-          <h3 className="font-serif text-2xl">{block.title}</h3>
+          <h3 className="text-2xl font-semibold tracking-tight">{block.title}</h3>
           <div className="grid gap-3 sm:grid-cols-2">
             {block.items.map((item) => (
               <article key={item.title} className="rounded-2xl bg-muted p-4">
@@ -152,7 +163,7 @@ function BlockView({ block }: { block: LessonBlock }) {
 }
 
 function Callout({ tone, title, body }: { tone: 'note' | 'distinction' | 'caution'; title: string; body: string }) {
-  const Icon = tone === 'caution' ? CircleAlert : tone === 'distinction' ? Scale : StickyNote
+  const name = tone === 'caution' ? 'error' : tone === 'distinction' ? 'balance' : 'sticky_note_2'
   const toneClass =
     tone === 'caution'
       ? 'border-caution/40 bg-caution-bg'
@@ -162,7 +173,11 @@ function Callout({ tone, title, body }: { tone: 'note' | 'distinction' | 'cautio
 
   return (
     <aside className={`flex gap-3 rounded-2xl border p-4 ${toneClass}`}>
-      <Icon className="mt-0.5 size-5 shrink-0" aria-hidden="true" />
+      {tone === 'caution' ? (
+        <Icon name={name} className="mt-0.5 text-caution" />
+      ) : (
+        <IconTile name={name} />
+      )}
       <div>
         <h3 className="font-semibold">{title}</h3>
         <p className="mt-1 text-sm leading-6">{body}</p>

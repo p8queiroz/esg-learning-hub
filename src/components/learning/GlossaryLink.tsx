@@ -1,10 +1,12 @@
 import * as Tooltip from '@radix-ui/react-tooltip'
 import { Link } from 'react-router'
 
-import { glossaryMap } from '@/content'
+import { glossaryMapOf } from '@/content'
+import { useLocale } from '@/hooks/useLocale'
 
 export function GlossaryLink({ id, children }: { id: string; children: string }) {
-  const entry = glossaryMap[id]
+  const { pack } = useLocale()
+  const entry = glossaryMapOf(pack)[id]
   if (!entry) return <span>{children}</span>
 
   return (

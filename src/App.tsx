@@ -2,6 +2,7 @@ import * as Tooltip from '@radix-ui/react-tooltip'
 import { BrowserRouter, Route, Routes } from 'react-router'
 
 import { AppShell } from '@/components/layout/AppShell'
+import { LocaleProvider } from '@/hooks/useLocale'
 import { ProgressProvider } from '@/hooks/useProgress'
 import { ThemeProvider } from '@/hooks/useTheme'
 import { routerBasename } from '@/lib/utils'
@@ -18,6 +19,7 @@ export function App() {
   return (
     <Tooltip.Provider delayDuration={300}>
     <ThemeProvider>
+      <LocaleProvider>
       <ProgressProvider>
         <BrowserRouter basename={routerBasename}>
           <Routes>
@@ -35,6 +37,7 @@ export function App() {
           </Routes>
         </BrowserRouter>
       </ProgressProvider>
+      </LocaleProvider>
     </ThemeProvider>
     </Tooltip.Provider>
   )
